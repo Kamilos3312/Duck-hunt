@@ -26,11 +26,8 @@ void Engine::run(){
         switch (state){
             case EngineState::MENU:
                 //Some random code here
-                //soundtrack.play();
-                draw(screen, 0, 320, 240, 100, MAGENTA);
                 while (!key[KEY_ESC]);
                 state = EXIT;
-                //soundtrack.stop();
                 break;
 
             case EngineState::STATE1:

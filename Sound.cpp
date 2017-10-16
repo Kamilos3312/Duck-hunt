@@ -7,7 +7,7 @@ sound_f::sound_f(){
 }
 
 int sound_f::load(){
-    track1 = load_wav("win_humans1.wav");
+    track1 = load_wav("resources/win_humans1.wav");
     if (!track1) {destroy_sample(track1);   return -1;}
     return 0;
 }

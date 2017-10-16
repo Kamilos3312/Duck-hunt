@@ -6,7 +6,7 @@ Image::Image(){
 }
 
 int Image::load_image(){
-    image1 = load_bmp("marbles.bmp", NULL);
+    image1 = load_bmp("resources/marbles.bmp", NULL);
     if (!image1)   {destroy_bitmap(image1);   return -1;}
     return 0;
 }
