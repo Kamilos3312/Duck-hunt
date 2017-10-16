@@ -1,0 +1,25 @@
+# depslib dependency file v1.0
+1508174388 source:c:\users\kamil\documents\code blocks projects\podejrzany projekt\main.cpp
+	"header.h"
+
+1508175879 c:\users\kamil\documents\code blocks projects\podejrzany projekt\header.h
+	<allegro.h>
+	<string>
+	<vector>
+
+1508096340 source:c:\users\kamil\documents\code blocks projects\podejrzany projekt\header.cpp
+	"header.h"
+	<iostream>
+	<cstdlib>
+	<ctime>
+	<algorithm>
+
+1508174469 source:c:\users\kamil\documents\code blocks projects\podejrzany projekt\image.cpp
+	"header.h"
+
+1508083165 source:c:\users\kamil\documents\code blocks projects\podejrzany projekt\other.cpp
+	"header.h"
+
+1508174473 source:c:\users\kamil\documents\code blocks projects\podejrzany projekt\sound.cpp
+	"header.h"
+
