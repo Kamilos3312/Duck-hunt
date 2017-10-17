@@ -1,3 +1,3 @@
 # Podejrzany-Projekt
-[Code::Blocks] Project
-[Allegro] 2D Engine
+[Code::Blocks][Allegro]<br />
+Project: Duck Hunt<br />

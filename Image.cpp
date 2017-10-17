@@ -1,21 +1,18 @@
 #include "header.h"
 
-Image::Image(){
-    if (load_image() < 0)
-        Error_Message("Image file not found or could not be opened.");
-}
-
-int Image::load_image(){
-    image1 = load_bmp("resources/marbles.bmp", NULL);
-    if (!image1)   {destroy_bitmap(image1);   return -1;}
+int Image::load(BITMAP **bmp, std::string path){
+    const char *name = path.c_str();
+    *bmp = load_bmp(name, NULL);
+    if (!(*bmp))   {destroy_bitmap((*bmp));   return -1;}
     return 0;
 }
 
-void Image::draw_image(BITMAP *screen, int x, int y){
-    draw_sprite(screen, image1, x,y);
-    //blit(image, screen, 0, 0, x, y, image->w, image->h);
+void Image::draw(BITMAP *bmp, int x, int y){
+    draw_sprite(screen, bmp, x,y);//
+    //blit(bmp, screen, 0, 0, x, y, bmp->w, bmp->h);
+    //draw_character_ex(screen, bmp, x, y, makecol(255, 0, 0), -1);
 }
 
-void Image::destroy_bitmaps() {
-    if (image1) destroy_bitmap(image1);
+void Image::destroyBitmaps(BITMAP *bmp) {
+    if (bmp) destroy_bitmap(bmp);
 }

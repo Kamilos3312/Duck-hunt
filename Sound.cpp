@@ -1,29 +1,27 @@
 #include "header.h"
 
-sound_f::sound_f(){
-    playing = 0;
-    if (load() < 0)
-        Error_Message("Audio file not found or could not be opened.");
+Sound_f::Sound_f(std::string path){
+    playing = false;
+    const char *name = path.c_str();
+    track = load_wav(name);
+    if (!track) {
+        destroy_sample(track);
+        errorMessage("Audio file not found or could not be opened.");
+    }
 }
 
-int sound_f::load(){
-    track1 = load_wav("resources/win_humans1.wav");
-    if (!track1) {destroy_sample(track1);   return -1;}
-    return 0;
+void Sound_f::play(int loop){
+    if (playing) return;
+    play_sample(track, 255, 128, 1000, loop);
+    playing = true;
 }
 
-void sound_f::play(){
-    if (playing == 1) return;
-    play_sample(track1, 255, 128, 1000, 1);
-    playing = 1;
+void Sound_f::stop(){
+    if (!playing) return;
+    stop_sample(track);
+    playing = false;
 }
 
-void sound_f::stop(){
-    if (playing == 0) return;
-    stop_sample(track1);
-    playing = 0;
-}
-
-void sound_f::destroy_samples() {
-    if (track1) destroy_sample(track1);
+void Sound_f::destroySamples() {
+    if (track) destroy_sample(track);
 }

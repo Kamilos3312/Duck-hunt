@@ -37,12 +37,12 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="Image.cpp" />
-		<Unit filename="Other.cpp" />
-		<Unit filename="Sound.cpp" />
+		<Unit filename="duck.cpp" />
 		<Unit filename="header.cpp" />
 		<Unit filename="header.h" />
+		<Unit filename="image.cpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="sound.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
