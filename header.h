@@ -32,7 +32,7 @@ public:
 // Sound class
 class Sound_f{
     SAMPLE *track;
-    bool playing;
+    //bool playing;
 
 public:
     Sound_f(std::string path);
@@ -47,6 +47,7 @@ public:
 class Engine{
     BITMAP *backgroundImage;
     BITMAP *shell[2];
+    BITMAP *points;
     int hits;
     int ammo;
 

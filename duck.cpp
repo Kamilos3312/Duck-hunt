@@ -13,7 +13,7 @@ void Duck::duckSpawn(){
 
     Image::draw(avatar, duckPos.x, duckPos.y);
 
-    rest(1);
+    //rest(1000);
 }
 
 void Duck::duckMove(){
@@ -27,7 +27,7 @@ void Duck::duckMove(){
     else
         Image::draw(avatar, x + duckPos.x, y - duckPos.y);
 
-    rest(1);
+    //rest(1000);
 }
 
 void Duck::duckDestroy(){

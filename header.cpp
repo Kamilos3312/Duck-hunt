@@ -31,13 +31,11 @@ void Engine::run(){
     Duck duck;
     Image::load(&backgroundImage, "resources/background.bmp");
     Image::load(&duck.avatar, "resources/duck.bmp");
-    Image::load(&shell[0], "resources/shell.bmp");
-    Image::load(&shell[1], "resources/shell.bmp");
+    Image::load(&shell[0], "resources/shell2.bmp");
+    Image::load(&shell[1], "resources/shell2.bmp");
 
     hits = 0;
     ammo = 2;
-    int click = 0;
-    int oldTime = 0;
 
     timer = 0;
     LOCK_FUNCTION(incTimer);
@@ -45,39 +43,32 @@ void Engine::run(){
     install_int_ex(incTimer, MSEC_TO_TIMER(1));
 
     BITMAP *time = create_bitmap(150, 12);
-    BITMAP *points = create_bitmap(100, 10);
+    points = create_bitmap(100, 10);
     draw_sprite(screen, backgroundImage, 0 ,0);
     background.play(1);   //Gra muzyke tla
+    if (ammo >= 2)  {   Image::draw(shell[1], 1135, 50);    Image::draw(shell[0], 1065, 50);   }
+    if (ammo == 1)  Image::draw(shell[0], 1065, 50);
     while (!key[KEY_ESC]){
+        if (!duck.visible)  duck.duckSpawn();
+
+        if (mouse_b & 1)    { shot.play(0);   hits++; }
+        //if (duck jest wiecej niz 5sekund)   duck.duckDestroy();
+        //control(duck, mousePos, shot);
+        //duck.duckMove();
+
+        //duck.sec++;
+        //duck.duckMove();*/
+        //Draw
         textprintf_centre_ex(time, font, 75, 2, makecol(255,255,255), -1,
            "Timer: %02d: %02d: %02d", (((timer/1000)/3600)%24) ,(((timer/1000)/60)%60) ,((timer/1000)%60));
         textprintf_centre_ex(points, font, 50, 1, makecol(255,255,255), -1,
            "Hits: %d", hits);
         draw_sprite(screen, time, 1000, 10);
         draw_sprite(screen, points, 700, 10);
+
+        //Clear bitmaps
         clear(time);
         clear(points);
-        if (oldTime + 1 >= timer) click = 0;
-        if (mouse_b & 1 && click == 0)    {   hits++; rest(1); click = 1;}
-        int oldTime = timer;
-
-        //click = 0;
-        //if (key[KEY_ESC]) exit(EXIT_SUCCESS);
-        //Image::draw(backgroundImage, 0, 0);   //Rysuje tlo
-
-        //if (ammo == 2)  Image::draw(shell[1], 1135, 50);  //Rysuje 2gi shell
-        //if (ammo == 1)  Image::draw(shell[0], 1065, 50);  //Rysuje 1szy shell
-        //if (!duck.visible)  duck.duckSpawn();
-        //if (duck.sec >= 5)   duck.duckDestroy();
-        //control(duck, mousePos, shot);
-        //duck.duckMove();
-
-        //timer--;
-        //duck.sec++;
-        //duck.duckMove();*/
-        //textprintf_centre_ex(screen, font, SCREEN_W/2, SCREEN_H/2, makecol(255,255,255), -1, "%d", timer);
-        //draw_sprite(screen, buffer, 0, 0);
-        //clear(buffer);
     }
     background.stop();
     background.destroySamples();
@@ -97,9 +88,8 @@ void Engine::control(Duck duck, Point mousePos, Sound_f shot){
             ammo--;
             if (checkShots(duck, mousePos)){
                 duck.duckDestroy();
-                hits += 1;
+                hits++;
             }
-        rest(1);
         }
     }
 
@@ -109,7 +99,7 @@ void Engine::control(Duck duck, Point mousePos, Sound_f shot){
 }
 
 void Engine::reload(){
-    rest(2);
+    rest(2000);
     ammo = 2;
 }
 
