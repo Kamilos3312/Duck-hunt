@@ -5,30 +5,23 @@ Duck::Duck(){
 }
 
 void Duck::duckSpawn(){
-    if (visible) return;
-    visible = true;
     duckPos.x = 10;
-    duckPos.y = rand()%(screen->h);
+    duckPos.y = rand()%525;
     while (duckPos.y > (screen->h - avatar->h))
         duckPos.y = rand()%(screen->h);
-
+    visible = true;
     Image::draw(avatar, duckPos.x, duckPos.y);
 }
 
 void Duck::duckMove(){
-    if (!visible) return;
-    int x = rand()%(int)70 + (screen->w/2 * 0.10);
-    if ((x + duckPos.x) > 1280) duckDestroy();
-    int y = rand()%(int)(screen->h * 0.7);
-    if ((y + duckPos.y) > 600)
+    duckPos.x = duckPos.x + (rand()%110 + 50);
+    if (duckPos.x >= 1150) duckDestroy();
+    int y = rand()%600 -300;
+    if ((duckPos.y + y) > 525 || duckPos.y + y < 0)
         y = -y;
-    int abc = rand()%2;
-    if (abc !=1 || y < 0)
-        Image::draw(avatar, duckPos.x + x, y + duckPos.y);
-    else
-        Image::draw(avatar, duckPos.x + x, y - duckPos.y);
+    Image::draw(avatar, duckPos.x, duckPos.y + y);
 }
 
 void Duck::duckDestroy(){
-    visible = false;
+    visible = false;    //To nie dzia³a :(
 }
