@@ -20,7 +20,7 @@ Engine::Engine(){
 
     if (set_gfx_mode(GFX_AUTODETECT_WINDOWED , 1280, 720, 0, 0) < 0)   errorMessage("Could not establish the graphic mode.");
     set_window_title("Duck Hunt v0.09");
-    //set_close_button_callback();  //Fun
+    //set_close_button_callback();
     clear_to_color(screen, makecol(255, 255, 255));
     show_mouse(screen);
 }
@@ -55,13 +55,8 @@ void Engine::run(){
     while (!key[KEY_ESC]){
         duck.duckSpawn();
 
-        //if ((mouse_b & 1) && (timer > old_timer + 1))    { shot.play(0);   hits++; old_timer = timer; }
-        //if (duck jest wiecej niz 5sekund)   duck.duckDestroy();
         control(duck, mousePos, shot, reload);
-        //duck.duckMove();
 
-        //duck.sec++;
-        duck.duckMove();
         //Draw
         textprintf_centre_ex(time, font, 65, 2, makecol(255,255,255), -1,
            "Time: %02d: %02d: %02d", (((timer)/3600)%24) ,(((timer)/60)%60) ,((timer)%60));
@@ -77,7 +72,6 @@ void Engine::run(){
     background.stop();
     background.destroySamples();
     shot.destroySamples();
-    //remove_int(inctimer); //Do Timera
     allegro_exit();
 }
 
