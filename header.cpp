@@ -1,7 +1,6 @@
 #include "header.h"
 
 volatile int timer;
-volatile int old_timer;
 void incTimer() { timer++; }
 END_OF_FUNCTION(incTimer)
 
@@ -27,14 +26,13 @@ Engine::Engine(){
 
 void Engine::run(){
     Point mousePos;
-    Sound_f background("resources/background_original.wav");
+    Sound_f background("resources/win_humans1.wav");
     Sound_f shot("resources/shot.wav");
-    Sound_f reload("resources/reload.wav");
     Duck duck;
     Image::load(&backgroundImage, "resources/background.bmp");
     Image::load(&duck.avatar, "resources/duck.bmp");
-    Image::load(&shell[0], "resources/shell.bmp");
-    Image::load(&shell[1], "resources/shell.bmp");
+    Image::load(&shell[0], "resources/shell2.bmp");
+    Image::load(&shell[1], "resources/shell2.bmp");
 
     hits = 0;
     ammo = 2;
@@ -42,33 +40,31 @@ void Engine::run(){
     timer = 0;
     LOCK_FUNCTION(incTimer);
     LOCK_VARIABLE(timer);
-    install_int_ex(incTimer, SECS_TO_TIMER(1));
+    install_int_ex(incTimer, MSEC_TO_TIMER(1));
 
-    BITMAP *time = create_bitmap(130, 12);
+    BITMAP *time = create_bitmap(150, 12);
     points = create_bitmap(100, 10);
     draw_sprite(screen, backgroundImage, 0 ,0);
-    background.play(1);
+    background.play(1);   //Gra muzyke tla
     if (ammo >= 2)  {   Image::draw(shell[1], 1135, 50);    Image::draw(shell[0], 1065, 50);   }
     if (ammo == 1)  Image::draw(shell[0], 1065, 50);
-
-    old_timer = 0;
     while (!key[KEY_ESC]){
-        duck.duckSpawn();
+        if (!duck.visible)  duck.duckSpawn();
 
-        //if ((mouse_b & 1) && (timer > old_timer + 1))    { shot.play(0);   hits++; old_timer = timer; }
+        if (mouse_b & 1)    { shot.play(0);   hits++; }
         //if (duck jest wiecej niz 5sekund)   duck.duckDestroy();
-        control(duck, mousePos, shot, reload);
+        //control(duck, mousePos, shot);
         //duck.duckMove();
 
         //duck.sec++;
-        duck.duckMove();
+        //duck.duckMove();*/
         //Draw
-        textprintf_centre_ex(time, font, 65, 2, makecol(255,255,255), -1,
-           "Time: %02d: %02d: %02d", (((timer)/3600)%24) ,(((timer)/60)%60) ,((timer)%60));
+        textprintf_centre_ex(time, font, 75, 2, makecol(255,255,255), -1,
+           "Timer: %02d: %02d: %02d", (((timer/1000)/3600)%24) ,(((timer/1000)/60)%60) ,((timer/1000)%60));
         textprintf_centre_ex(points, font, 50, 1, makecol(255,255,255), -1,
            "Hits: %d", hits);
-        draw_sprite(screen, time, 1050, 10);
-        draw_sprite(screen, points, 595, 10);
+        draw_sprite(screen, time, 1000, 10);
+        draw_sprite(screen, points, 700, 10);
 
         //Clear bitmaps
         clear(time);
@@ -81,12 +77,12 @@ void Engine::run(){
     allegro_exit();
 }
 
-void Engine::control(Duck duck, Point mousePos, Sound_f shot, Sound_f r){
+void Engine::control(Duck duck, Point mousePos, Sound_f shot){
     mousePos.x = mouse_pos >> 16;
     mousePos.y = mouse_pos & 0x0000ffff;
 
-    if ((mouse_b & 1) && (timer > old_timer + 1)){
-        if(ammo <= 0) { reload(r);   return;  }
+    if (mouse_b & 1){
+        if(ammo <= 0) reload();
         else{
             shot.play(0);
             ammo--;
@@ -95,18 +91,16 @@ void Engine::control(Duck duck, Point mousePos, Sound_f shot, Sound_f r){
                 hits++;
             }
         }
-        old_timer = timer;
     }
 
-    if (((mouse_b & 2) || key[KEY_R]) && ammo < 2 && (timer > old_timer + 1)){
-        reload(r);
+    if ((mouse_b & 2) || key[KEY_R]){
+        reload();
     }
 }
 
-void Engine::reload(Sound_f r){
-    r.play(0);
+void Engine::reload(){
+    rest(2000);
     ammo = 2;
-    old_timer += 2;
 }
 
 void errorMessage(const char *message) {
