@@ -5,29 +5,28 @@ Duck::Duck(){
 }
 
 void Duck::duckSpawn(){
+    if (visible) return;
     visible = true;
     duckPos.x = 10;
     duckPos.y = rand()%(screen->h);
-    while (duckPos.y > (screen->h + avatar->h))
+    while (duckPos.y > (screen->h - avatar->h))
         duckPos.y = rand()%(screen->h);
 
     Image::draw(avatar, duckPos.x, duckPos.y);
-
-    //rest(1000);
 }
 
 void Duck::duckMove(){
-    int x = duckPos.x;
-    int y = duckPos.y;
-    duckPos.x = rand()%(int)(screen->w * 0.05);
-    duckPos.y = rand()%(int)(screen->h * 0.05);
+    if (!visible) return;
+    int x = rand()%(int)70 + (screen->w/2 * 0.10);
+    if ((x + duckPos.x) > 1280) duckDestroy();
+    int y = rand()%(int)(screen->h * 0.7);
+    if ((y + duckPos.y) > 600)
+        y = -y;
     int abc = rand()%2;
-    if (abc == 1)
-        Image::draw(avatar, x + duckPos.x, y + duckPos.y);
+    if (abc !=1 || y < 0)
+        Image::draw(avatar, duckPos.x + x, y + duckPos.y);
     else
-        Image::draw(avatar, x + duckPos.x, y - duckPos.y);
-
-    //rest(1000);
+        Image::draw(avatar, duckPos.x + x, y - duckPos.y);
 }
 
 void Duck::duckDestroy(){

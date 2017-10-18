@@ -4,7 +4,6 @@
 #include <allegro.h>
 #include <ctime>
 #include <string>
-#include <thread>
 
 //----------------- Structures -----------------
 struct Point{
@@ -52,8 +51,8 @@ class Engine{
     int ammo;
 
     //Controllers
-    void reload();
-    void control(Duck duck, Point mousePos, Sound_f shot);
+    void reload(Sound_f r);
+    void control(Duck duck, Point mousePos, Sound_f shot, Sound_f r);
 
 public:
     Engine();

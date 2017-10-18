@@ -1,0 +1,14 @@
+
+bin/Debug/Podejrzany Projekt.exe
+obj/Debug/header.o
+obj/Debug/Image.o
+obj/Debug/main.o
+obj/Debug/Other.o
+obj/Debug/Sound.o
+Podejrzany Projekt.layout
+Podejrzany Projekt.depend
+Podejrzany Projekt.cbp
+*.layout
+Podejrzany Projekt.depend
+*.depend
+*.o
