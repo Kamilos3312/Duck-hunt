@@ -2,6 +2,7 @@
 #define HEADER_H_INCLUDED
 
 #include <allegro.h>
+#include <ctime>
 #include <string>
 #include <thread>
 
@@ -46,7 +47,7 @@ public:
 class Engine{
     BITMAP *backgroundImage;
     BITMAP *shell[2];
-    int score;
+    int hits;
     int ammo;
 
     //Controllers
