@@ -4,78 +4,66 @@
 #include <allegro.h>
 #include <ctime>
 #include <string>
-#include <iostream>
-using namespace std;
 
 //----------------- Structures -----------------
-struct Point{
-    int x;
-    int y;
+struct Point{   //Point coordinates in the 2 dimensional space
+    int x;  //Position horizontally
+    int y;  //Position vertically
 };
 
 //----------------- Classes -----------------
 class Duck{
 public:
-    Point duckPos;
-    BITMAP *avatar;
-
-    bool visible;
-    int sec;
+    Point duckPos;  //Duck position on the map
+    BITMAP *avatar; //Ducks avatar
+    bool visible;   //Duck visible = true, invisible = false
 
     Duck();
     ~Duck() = default;
 
-    void duckSpawn();
-    void duckMove();
-    void duckDestroy();
+    void duckSpawn();   //Spawns new duck
+    void duckMove();    //Moves duck
+    void duckDestroy(); //Destroys duck
 };
 
-// Sound class
 class Sound_f{
-    SAMPLE *track;
-    //bool playing;
-
+    SAMPLE *track;  //Sample which will contain the audio
 public:
-    Sound_f(std::string path);
+    Sound_f(std::string path);  //Loads audio from given path into the sample
     ~Sound_f() = default;
 
-    void play(int loop);
-    void stop();
-    void destroySamples();
+    void play(int loop);    //Plays audio
+    void destroySamples();  //Destroys sample
 };
 
-// Engine class
 class Engine{
-    BITMAP *backgroundImage;
-    BITMAP *shell[2];
-    BITMAP *points;
-    int hits;
-    int ammo;
+    BITMAP *backgroundImage;    //Bitmap which will contain background image
+    BITMAP *shell[2];   //Bitmaps which will contain shell images
+    BITMAP *points; //Bitmap which will contain Hit counter
+    BITMAP *time_map;   //Bitmap which will contain playing time
+    int hits;   //Hit counter
+    int ammo;   //Available ammo
 
-    //Controllers
-    void reload(Sound_f r);
-    void control(Duck duck, Point mousePos, Sound_f shot, Sound_f r);
+    void reload(Sound_f r); //Reloads the gun
+    void control(Duck duck, Point mousePos, Sound_f shot, Sound_f r);   //Steering method which contains game logic
 
 public:
     Engine();
     ~Engine() = default;
 
-    void run();
+    void run(); //Starts the engine
 };
 
-// Image class
 class Image{
 public:
-    static int load(BITMAP **bmp, std::string path);
-    static void draw(BITMAP *bmp, int x, int y);
-    static void destroyBitmaps(BITMAP *bmp);
+    static void load(BITMAP **bmp, std::string path);   //Loads bitmap from given path into the passed bitmap
+    static void draw(BITMAP *bmp, int x, int y);    //Draws passed bitmap onto the screen
+    static void destroy(BITMAP *bmp);   //Destroys passed bitmap
 };
 
 //----------------- Standalone functions -----------------
-void errorMessage(const char *message);
+void errorMessage(const char *message); //Displays error message
 
-bool checkShots(Duck duck, Point mousePos);
-
-void callFromThread(Sound_f track);
+bool checkShots(Duck duck, Point mousePos); //Checks if player hit a duck
 
 #endif // HEADER_H_INCLUDED
