@@ -1,21 +1,21 @@
 # depslib dependency file v1.0
-1508350297 source:c:\users\kamil\documents\code blocks projects\podejrzany projekt\duck.cpp
+1508419874 source:c:\users\kamil\documents\code blocks projects\podejrzany projekt\duck.cpp
 	"header.h"
 
-1508350748 c:\users\kamil\documents\code blocks projects\podejrzany projekt\header.h
+1508420025 c:\users\kamil\documents\code blocks projects\podejrzany projekt\header.h
 	<allegro.h>
 	<ctime>
 	<string>
 
-1508350687 source:c:\users\kamil\documents\code blocks projects\podejrzany projekt\image.cpp
+1508416363 source:c:\users\kamil\documents\code blocks projects\podejrzany projekt\image.cpp
 	"header.h"
 
-1508349663 source:c:\users\kamil\documents\code blocks projects\podejrzany projekt\main.cpp
+1508417329 source:c:\users\kamil\documents\code blocks projects\podejrzany projekt\main.cpp
 	"header.h"
 
-1508350694 source:c:\users\kamil\documents\code blocks projects\podejrzany projekt\sound.cpp
+1508416366 source:c:\users\kamil\documents\code blocks projects\podejrzany projekt\sound.cpp
 	"header.h"
 
-1508350811 source:c:\users\kamil\documents\code blocks projects\podejrzany projekt\header.cpp
+1508420112 source:c:\users\kamil\documents\code blocks projects\podejrzany projekt\header.cpp
 	"header.h"
 

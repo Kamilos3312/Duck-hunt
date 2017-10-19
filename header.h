@@ -39,13 +39,13 @@ public:
 class Engine{
     BITMAP *backgroundImage;    //Bitmap which will contain background image
     BITMAP *shell[2];   //Bitmaps which will contain shell images
-    BITMAP *points; //Bitmap which will contain Hit counter
-    BITMAP *time_map;   //Bitmap which will contain playing time
+    BITMAP *timeMap;   //Bitmap which will contain playing time
+    BITMAP *hitMap; //Bitmap which will contain Hit counter
     int hits;   //Hit counter
     int ammo;   //Available ammo
 
     void reload(Sound_f r); //Reloads the gun
-    void control(Duck duck, Point mousePos, Sound_f shot, Sound_f r);   //Steering method which contains game logic
+    void control(Duck &duck, Sound_f shot, Sound_f r);   //Steering method which contains game logic
 
 public:
     Engine();
@@ -64,6 +64,6 @@ public:
 //----------------- Standalone functions -----------------
 void errorMessage(const char *message); //Displays error message
 
-bool checkShots(Duck duck, Point mousePos); //Checks if player hit a duck
+bool checkShots(Duck duck); //Checks if player hit a duck
 
 #endif // HEADER_H_INCLUDED
