@@ -41,6 +41,8 @@ class Engine{
     BITMAP *shell[2];   //Bitmaps which will contain shell images
     BITMAP *timeMap;   //Bitmap which will contain playing time
     BITMAP *hitMap; //Bitmap which will contain Hit counter
+    BITMAP *dog;
+    BITMAP *cursor;
     int hits;   //Hit counter
     int ammo;   //Available ammo
 

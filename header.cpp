@@ -39,6 +39,7 @@ void Engine::run(){
     Image::load(&duck.avatar, "resources/duck.bmp");    //Loads image from given path into the bitmap
     Image::load(&shell[0], "resources/shell.bmp");  //Loads image from given path into the bitmap
     Image::load(&shell[1], "resources/shell.bmp");  //Loads image from given path into the bitmap
+    Image::load(&dog, "resources/dog.bmp");
 
     //Set default
     hits = 0;   //Hit counter
@@ -72,6 +73,7 @@ void Engine::run(){
             if (ammo >= 1 && timer >= actionDelay)  Image::draw(shell[0], 1065, 50);
             second++;
         }
+        //Image::draw(duck.avatar, duck.duckPos.x, duck.duckPos.y);  //Draws duck onto the screen
         clear_bitmap(timeMap);
         clear_bitmap(hitMap);
     }
@@ -97,6 +99,9 @@ void Engine::control(Duck &duck, Sound_f shot, Sound_f r){
             ammo--; //Ammo was used
             if (checkShots(duck)){  //Checks if duck was hit
                 duck.duckDestroy();
+                Image::draw(backgroundImage, 0 ,0);
+                Image::draw(dog, duck.duckPos.x, 525);
+                second += 2;
                 hits++; //Increases hit counter
             }
             actionDelay = timer + 1;
