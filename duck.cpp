@@ -21,7 +21,6 @@ void Duck::duckMove(){  //Move duck
     if ((duckPos.y + y) > 525 || duckPos.y + y < 15)   //If a new Y is beyond window area ->
         y = -y; //changes Y sign
         duckPos.y += y;
-    //Image::draw(avatar, duckPos.x, duckPos.y + y);  //Draws duck onto the screen
 }
 
 void Duck::duckDestroy(){   //Destroy duck

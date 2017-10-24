@@ -34,12 +34,14 @@ void Engine::run(){
     Sound_f background("resources/background.wav"); //Loads audio from given path into the sample
     Sound_f shot("resources/shot.wav"); //Loads audio from given path into the sample
     Sound_f reload("resources/reload.wav"); //Loads audio from given path into the sample
+    Sound_f laugh("resources/laugh.wav");
     Duck duck;  //Creates duck object
     Image::load(&backgroundImage, "resources/background.bmp");  //Loads image from given path into the bitmap
     Image::load(&duck.avatar, "resources/duck.bmp");    //Loads image from given path into the bitmap
     Image::load(&shell[0], "resources/shell.bmp");  //Loads image from given path into the bitmap
     Image::load(&shell[1], "resources/shell.bmp");  //Loads image from given path into the bitmap
-    Image::load(&dog, "resources/dog.bmp");
+    Image::load(&dog, "resources/dog.bmp");     //Loads image from given path into the bitmap
+    Image::load(&shotgun, "resources/shotgun.bmp");
 
     //Set default
     hits = 0;   //Hit counter
@@ -59,21 +61,17 @@ void Engine::run(){
     background.play(1);
 
     while (!key[KEY_ESC]){
-        control(duck, shot, reload);
+        control(duck, shot, reload, laugh);
         if (timer > second){
             textprintf_centre_ex(timeMap, font, 65, 2, makecol(255,255,255), -1, "Time: %02d: %02d: %02d", (((timer)/3600)%24) ,(((timer)/60)%60) ,((timer)%60));
             textprintf_centre_ex(hitMap, font, 50, 1, makecol(255,255,255), -1, "Hits: %d", hits);
-            Image::draw(backgroundImage, 0 ,0);
-            draw_sprite(screen, timeMap, 1050, 10);
-            draw_sprite(screen, hitMap, 595, 10);
             if (duck.visible)  duck.duckMove();
             else duck.duckSpawn();
-            Image::draw(duck.avatar, duck.duckPos.x, duck.duckPos.y);  //Draws duck onto the screen
-            if (ammo >= 2 && timer >= actionDelay)  Image::draw(shell[1], 1135, 50);
-            if (ammo >= 1 && timer >= actionDelay)  Image::draw(shell[0], 1065, 50);
+            //Draw
+            draw(duck);
+            draw_sprite(screen, shotgun, mouse_x - 150, 550);
             second++;
         }
-        //Image::draw(duck.avatar, duck.duckPos.x, duck.duckPos.y);  //Draws duck onto the screen
         clear_bitmap(timeMap);
         clear_bitmap(hitMap);
     }
@@ -81,22 +79,16 @@ void Engine::run(){
     background.destroySamples();    //Destroys music sample
     shot.destroySamples();  //Destroys SFX sample
     reload.destroySamples();    //Destroys SFX sample
-    Image::destroy(shell[0]);   //Destroys bitmap
-    Image::destroy(shell[1]);   //Destroys bitmap
-    Image::destroy(duck.avatar);    //Destroys bitmap
-    Image::destroy(backgroundImage);    //Destroys bitmap
-    Image::destroy(timeMap);    //Destroys bitmap
-    Image::destroy(hitMap); //Destroys bitmap
-
-    allegro_exit(); //Removes allegro libs
+    laugh.destroySamples();     //Destroys SFX sample
+    deinitialize(duck);
 }
 
-void Engine::control(Duck &duck, Sound_f shot, Sound_f r){
+void Engine::control(Duck &duck, Sound_f shot, Sound_f r, Sound_f laugh){
     if (mouse_b & 1 && timer > actionDelay){
         if(ammo <= 0) { reload(r);   return;  } //If ammo is 0 -> reload
         else{
             shot.play(0);   //Plays shot SFX
-            ammo--; //Ammo was used
+            ammo--;     //Ammo was used
             if (checkShots(duck)){  //Checks if duck was hit
                 duck.duckDestroy();
                 Image::draw(backgroundImage, 0 ,0);
@@ -104,6 +96,8 @@ void Engine::control(Duck &duck, Sound_f shot, Sound_f r){
                 second += 2;
                 hits++; //Increases hit counter
             }
+            else
+                laugh.play(0);
             actionDelay = timer + 1;
         }
     }
@@ -115,6 +109,26 @@ void Engine::reload(Sound_f r){
     r.play(0);
     ammo = 2;
     actionDelay = timer + 1.5;
+}
+
+void Engine::draw(Duck &duck){
+    Image::draw(backgroundImage, 0 ,0);
+    Image::draw(duck.avatar, duck.duckPos.x, duck.duckPos.y);
+    if (ammo >= 2 && timer >= actionDelay)  Image::draw(shell[1], 1135, 50);
+    if (ammo >= 1 && timer >= actionDelay)  Image::draw(shell[0], 1065, 50);
+    Image::draw(timeMap, 1050, 10);
+    Image::draw(hitMap, 595, 10);
+}
+
+void Engine::deinitialize(Duck &duck){
+    Image::destroy(shell[0]);   //Destroys bitmap
+    Image::destroy(shell[1]);   //Destroys bitmap
+    Image::destroy(duck.avatar);    //Destroys bitmap
+    Image::destroy(backgroundImage);    //Destroys bitmap
+    Image::destroy(timeMap);    //Destroys bitmap
+    Image::destroy(hitMap); //Destroys bitmap
+
+    allegro_exit(); //Removes allegro libs
 }
 
 //--------

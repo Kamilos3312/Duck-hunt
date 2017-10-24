@@ -41,13 +41,15 @@ class Engine{
     BITMAP *shell[2];   //Bitmaps which will contain shell images
     BITMAP *timeMap;   //Bitmap which will contain playing time
     BITMAP *hitMap; //Bitmap which will contain Hit counter
-    BITMAP *dog;
-    BITMAP *cursor;
+    BITMAP *dog;    //Bitmap which will contain dog image
+    BITMAP *shotgun;
     int hits;   //Hit counter
     int ammo;   //Available ammo
 
     void reload(Sound_f r); //Reloads the gun
-    void control(Duck &duck, Sound_f shot, Sound_f r);   //Steering method which contains game logic
+    void control(Duck &duck, Sound_f shot, Sound_f r, Sound_f laugh);   //Steering method which contains game logic
+    void draw(Duck &duck);
+    void deinitialize(Duck &duck);
 
 public:
     Engine();
