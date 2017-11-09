@@ -48,7 +48,6 @@ class Engine{
 
     void reload(Sound_f r); //Reloads the gun
     void control(Duck &duck, Sound_f shot, Sound_f r, Sound_f laugh);   //Steering method which contains game logic
-    void draw(Duck &duck);
     void deinitialize(Duck &duck);
 
 public:
