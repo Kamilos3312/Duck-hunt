@@ -2,71 +2,71 @@
 #define HEADER_H_INCLUDED
 
 #include <allegro.h>
-#include <ctime>
+//#include <ctime>
 #include <string>
 
 //----------------- Structures -----------------
-struct Point{   //Point coordinates in the 2 dimensional space
-    int x;  //Position horizontally
-    int y;  //Position vertically
+struct Point{
+    int x;
+    int y;
 };
 
 //----------------- Classes -----------------
 class Duck{
 public:
-    Point duckPos;  //Duck position on the map
-    BITMAP *avatar; //Ducks avatar
-    bool visible;   //Duck visible = true, invisible = false
+    Point duckPos;
+    BITMAP *avatar;
+    bool visible;
 
     Duck();
     ~Duck() = default;
 
-    void duckSpawn();   //Spawns new duck
-    void duckMove();    //Moves duck
-    void duckDestroy(); //Destroys duck
+    void duckSpawn();
+    void duckMove();
+    void duckDestroy();
 };
 
 class Sound_f{
-    SAMPLE *track;  //Sample which will contain the audio
+    SAMPLE *track;
 public:
-    Sound_f(std::string path);  //Loads audio from given path into the sample
+    Sound_f(std::string path);
     ~Sound_f() = default;
 
-    void play(int loop);    //Plays audio
-    void destroySamples();  //Destroys sample
+    void play(int loop);
+    void destroySamples();
 };
 
 class Engine{
-    BITMAP *backgroundImage;    //Bitmap which will contain background image
-    BITMAP *shell[2];   //Bitmaps which will contain shell images
-    BITMAP *timeMap;   //Bitmap which will contain playing time
-    BITMAP *hitMap; //Bitmap which will contain Hit counter
-    BITMAP *dog;    //Bitmap which will contain dog image
+    BITMAP *backgroundImage;
+    BITMAP *shell;
+    BITMAP *timeMap;
+    BITMAP *hitMap;
+    BITMAP *dog;
     BITMAP *shotgun;
-    int hits;   //Hit counter
-    int ammo;   //Available ammo
+    int hits;
+    int ammo;
 
-    void reload(Sound_f r); //Reloads the gun
-    void control(Duck &duck, Sound_f shot, Sound_f r, Sound_f laugh);   //Steering method which contains game logic
+    void reload(Sound_f r);
+    void control(Duck &duck, Sound_f shot, Sound_f r, Sound_f laugh);
     void deinitialize(Duck &duck);
 
 public:
     Engine();
     ~Engine() = default;
 
-    void run(); //Starts the engine
+    void run();
 };
 
 class Image{
 public:
-    static void load(BITMAP **bmp, std::string path);   //Loads bitmap from given path into the passed bitmap
-    static void draw(BITMAP *bmp, int x, int y);    //Draws passed bitmap onto the screen
-    static void destroy(BITMAP *bmp);   //Destroys passed bitmap
+    static void load(BITMAP **bmp, std::string path);
+    static void draw(BITMAP *bmp, int x, int y);
+    static void destroy(BITMAP *bmp);
 };
 
 //----------------- Standalone functions -----------------
-void errorMessage(const char *message); //Displays error message
+void errorMessage(const char *message);
 
-bool checkShots(Duck duck); //Checks if player hit a duck
+bool checkShots(Duck duck);
 
 #endif // HEADER_H_INCLUDED

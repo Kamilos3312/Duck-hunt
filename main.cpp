@@ -1,8 +1,8 @@
 #include "header.h"
 
 int main(){
-    Engine engine;  //Creates the engine object
-    engine.run();   //Starts the engine
+    Engine engine;
+    engine.run();
 
     return 0;
 }
